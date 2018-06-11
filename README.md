@@ -77,3 +77,29 @@ The data is sent record-by-record to the block (this happens very fast). After t
 </pre>
 
 ## Retrieving your data from a block
+
+The blockchain stores your data within each block either as **Raw Transactions** or a **Uniform Ledger**. The difference is just that the data in the ledger has been grouped by keys. This makes aggregation-style analysis much easier.
+
+To fetch all the data saved in the "WebPhoneBook" block, type:
+
+<pre>
+  ReturnATransaction("WebPhoneBook")
+</pre>
+
+OR:
+
+<pre>
+  ReturnALedger("WebPhoneBook")
+</pre>
+
+To view all your data (in all their respective blocks), use:
+
+<pre>
+  ReturnTransactions()
+</pre>
+
+OR:
+
+<pre>
+  ReturnLedgers()
+</pre>
