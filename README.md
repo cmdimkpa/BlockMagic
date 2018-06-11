@@ -2,6 +2,12 @@
 ## Simple & Fast Web I/O on Secure Blockchain
 **BlockMagic** is a blockchain for secure data storage and retrieval. It delivers fast data I/O for web and mobile applications while ensuring security and privacy of your data.
 
+Install from Pip:
+
+<code>
+  pip install block_magic
+</code>
+
 BlockMagic is based on a real blockchain: To save data to the blockchain, your Python client (BlockMagic for Python) creates a **block** in the blockchain using public-key encryption. The tedious details are abstracted between the Core API/Client interaction, so you only need to do this:
 
 <code>
