@@ -36,6 +36,8 @@ You can use the created block for a practical purpose such as "Web Phone Book", 
 
 <b>A note on data security: </b> Only you can access the data you store on the blockchain. In fact, you must use the same machine or terminal you used to create the block to be able to access the data you saved on that block. There are no public methods for accessing data on the blockchain, as you must supply a block key (your client does this for you) to the block chain, and the supplied key must match the private key the blockchain tracks for your device or terminal. It is a closed data circuit.
 
+Also, because the blockchain is immutable, the data you have saved on it cannot change, except you wish to add new data to your block, or create a new block.
+
 Now let's demonstrate how to send some data to your block. Let's prepare some sample data:
 
 <pre>
