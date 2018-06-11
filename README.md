@@ -59,3 +59,9 @@ Now let's demonstrate how to send some data to your block. Let's prepare some sa
 </pre>
 
 Note that you should always package your data as a list of records, even if you have a single record.
+
+Sending data to the block is as simple as:
+
+<pre>
+  SendData("WebPhoneBook",myContacts)
+</pre>
