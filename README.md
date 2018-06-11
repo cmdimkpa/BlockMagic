@@ -36,6 +36,26 @@ You can use the created block for a practical purpose such as "Web Phone Book", 
 
 <b>A note on data security: </b> Only you can access the data you store on the blockchain. In fact, you must use the same machine or terminal you used to create the block to be able to access the data you saved on that block. There are no public methods for accessing data on the blockchain, as you must supply a block key (your client does this for you) to the block chain, and the supplied key must match the private key the blockchain tracks for your device or terminal. It is a closed data circuit.
 
+Now let's demonstrate how to send some data to your block. Let's prepare some sample data:
 
+<pre>
+  myContacts = [
+    {
+      "name":"John Egglington",
+      "phone":"1-800-212-3456",
+      "email":"john.egglington@emailserve.net"
+    },
+    {
+      "name":"Mary Tipton",
+      "phone":"1-616-420-1123",
+      "email":"mary_tipton@dowdandco.org"
+    },
+    {
+      "name":"Monty Dimkpa",
+      "phone":"1-820-444-6718",
+      "email":"cmdimkpa@gmail.com"
+    }
+  ]
+</pre>
 
-You can then simply prepare a list of records you want to upload to the block and send using a convenient function.
+Note that you should always package your data as a list of records, even if you have a single record.
