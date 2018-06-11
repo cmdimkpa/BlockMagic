@@ -1,5 +1,5 @@
 # BlockMagic for Python
-## Simple & Fast Web I/O on Secure Blockchain
+## Simple & Fast Web I/O on a Secure Blockchain
 **BlockMagic** is a blockchain for secure data storage and retrieval. It delivers fast data I/O for web and mobile applications while ensuring security and privacy of your data.
 
 Install from Pip:
@@ -62,8 +62,18 @@ Now let's demonstrate how to send some data to your block. Let's prepare some sa
 
 Note that you should always package your data as a list of records, even if you have a single record.
 
+## Sending data to a block
+
 Sending data to the block is as simple as:
 
 <pre>
   SendData("WebPhoneBook",myContacts)
 </pre>
+
+The data is sent record-by-record to the block (this happens very fast). After the data is sent, you will receive a message:
+
+<pre>
+  {u'message': u'Ledger updated', u'code': 201}
+</pre>
+
+## Retrieving your data from a block
