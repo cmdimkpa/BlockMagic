@@ -95,11 +95,17 @@ OR:
 To view all your data (in all their respective blocks), use:
 
 <pre>
-  ReturnTransactions()
+  ReturnMyTransactions()
 </pre>
 
 OR:
 
 <pre>
-  ReturnLedgers()
+  ReturnMyLedger()
 </pre>
+
+<b>On immutabiity of data: </b> One of the more striking features of blockchains is that the data stored on them cannot change. This means that you should only store **facts** on BlockMagic, because you will not be able to edit them after.
+
+Feel free to send questions or comments to: cmdimkpa@gmail.com
+
+Happy I/O !
