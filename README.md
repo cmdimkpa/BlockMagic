@@ -34,4 +34,8 @@ You can use the created block for a practical purpose such as "Web Phone Book", 
   <b>Output: </b>the block [webphonebook] was registered on the blockchain
 </pre>
 
+<b>A note on data security: </b> Only you can access the data you store on the blockchain. In fact, you must use the same machine or terminal you used to create the block to be able to access the data you saved on that block. There are no public methods for accessing data on the blockchain, as you must supply a block key (your client does this for you) to the block chain, and the supplied key must match the private key the blockchain tracks for your device or terminal. It is a closed data circuit.
+
+
+
 You can then simply prepare a list of records you want to upload to the block and send using a convenient function.
