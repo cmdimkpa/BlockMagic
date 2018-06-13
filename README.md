@@ -44,7 +44,7 @@ Running the above code generates the following success messages:
 
 Once you mine (create) a block, it takes up to a minute to be registered on the blockchain. The client automatically manages the connection in case you want to send data immediately.
 
-Your data is not public as it cannot be accessed from any device terminal other than the one used to create the block. Even if you use another terminal on the same device, the data will not be available. So the communication is a closed I/O circuit.
+Your data is not public as it cannot be accessed from any device terminal other than the one used to create the block. Even if you use another terminal type on the same device, the data will not be available. So the communication is a closed I/O circuit.
 
 #### Sending Data
 
@@ -69,7 +69,19 @@ myContacts = [
     }
   ]
 
-SendData("WebDirectory",myContacts)
+SendData("WebDirectory",myContacts)   # send myContacts to "WebDirectory"
+</pre>
+
+The sending process is fully managed with a connection manager and reporting tool that displays status in your terminal. If you have just created the block, the connection manager will keep retrying until the block is available, then it will send all the data. It also handles and reports errors. In general, your data is always reliably delivered to the block.
+
+An example process output:
+
+<pre>
+retrying...
+{u'message': u'Ledger updated', u'code': 201} (target: http://monty.link/2iSkFewPh2/626c6f636b5f696e666f3a70686f6e653d312d3830302d3231322d33343536266e616d653d4a6f686e204567676c696e67746f6e26656d61696c3d6a6f686e2e6567676c696e67746f6e40656d61696c73657276652e6e6574)
+{u'message': u'Ledger updated', u'code': 201}
+{u'message': u'Ledger updated', u'code': 201}
+{u'message': u'Ledger updated', u'code': 201}
 </pre>
 
 ### Retrieving data: transactions and ledgers
