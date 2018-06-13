@@ -84,6 +84,16 @@ retrying...
 {u'message': u'Ledger updated', u'code': 201}
 </pre>
 
+#### Data security
+
+BlockMagic encrypts your data as a "hash" before sending e.g. 
+
+<pre>
+626c6f636b5f696e666f3a70686f6e653d312d3830302d3231322d33343536266e616d653d4a6f686e204567676c696e67746f6e26656d61696c3d6a6f686e2e6567676c696e67746f6e40656d61696c73657276652e6e6574
+</pre>
+
+So your data is private (encrypted) even on an open connection. Also, the client builds a "tunnel" connection to the blockchain. Any blocks created using that tunnel can only be reached via that tunnel. The tunnel is effectively a public key - private key connection between your terminal and the blockchain. This ensures that another device or user cannot access your blocks.
+
 ### Retrieving data: transactions and ledgers
 
 ### Public usage
