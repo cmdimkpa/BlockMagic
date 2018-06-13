@@ -1,6 +1,6 @@
 # BlockMagic for Python
 ## Simple & Fast Web I/O on a Secure Blockchain
-**BlockMagic** is an I/O Client for secure data storage and retrieval on the [Monty.Link] Blockchain. It delivers fast data I/O for web and mobile applications while ensuring security and privacy of your data.
+**BlockMagic** is an I/O Client for secure data storage and retrieval on the [Monty.Link] Blockchain. It delivers fast data I/O for web applications while ensuring security and privacy of your data.
 
 [Monty.Link] is a blockchain for secure data storage. It is currently in beta. Disclaimer: while we support public use of the blockchain for educational or commercial projects and do not track or use the data you submit to the platform in any way, we are not liable for any challenges arising from loss of service or data. Do not store sensitive or confidential information on [Monty.Link].
 
@@ -130,7 +130,82 @@ Sample output:
 
 Note: if you are operating on a terminal, you might see some diagnostic messages (even HTTP 500 errors), simply ignore them as your data will always be saved to the variable you have declared.
 
-So far, we have returned one transaction and one ledger. That's because we 
+So far, we have returned one transaction and one ledger. That's because we only have data in one block. Let's store some data in the "Logins" block, so we can demonstrate returning all transactions and all ledgers.
+
+<pre>
+SampleLogins = [
+  {"user":"altair444", "pass":"ojwfjefjoejfeojf8765"},
+  {"user":"shazam67@y", "pass":"lacazaette686"},
+  {"user":"romulusTiDer", "pass":"kljwdkwjdwdjd675"}
+]
+</pre>
+
+<pre>
+SendData("Logins",SampleLogins)
+</pre>
+
+Sample output:
+
+<pre>
+retrying...
+{u'message': u'Ledger updated', u'code': 201} (target: http://monty.link/pZt6b4sX7/626c6f636b5f696e666f3a757365723d616c7461697234343426706173733d6f6a77666a65666a6f656a66656f6a6638373635)
+{u'message': u'Ledger updated', u'code': 201}
+{u'message': u'Ledger updated', u'code': 201}
+{u'message': u'Ledger updated', u'code': 201}
+</pre>
+
+So, we have some sample login data on the blockchain. Now's let retrieve it in our application:
+
+<pre>
+logins = return_one_tx("Logins")
+print logins
+</pre>
+
+Output:
+<pre>
+>>> logins
+[{u'user': u'altair444', u'pass': u'ojwfjefjoejfeojf8765'}, {u'user': u'shazam67@y', u'pass': u'lacazaette686'}, {u'user': u'romulusTiDer', u'pass': u'kljwdkwjdwdjd675'}]
+</pre>
+
+Additionally, since we have more than one block, we can use the `return_all` functions:
+
+1. Return all transactions
+
+<pre>
+transactions = return_all_tx()
+print transactions
+</pre>
+
+Sample output:
+
+<pre>
+>>> transactions
+{u'logins': [{u'user': u'altair444', u'pass': u'ojwfjefjoejfeojf8765'}, {u'user': u'shazam67@y', u'pass': u'lacazaette686'}, {u'user': u'romulusTiDer', u'pass': u'kljwdkwjdwdjd675'}], u'webdirectory': [{u'phone': u'1-800-212-3456', u'name': u'John Egglington', u'email': u'john.egglington@emailserve.net'}, {u'phone': u'1-616-420-1123', u'name': u'Mary Tipton', u'email': u'mary_tipton@dowdandco.org'}, {u'phone': u'1-820-444-6718', u'name': u'Monty Dimkpa', u'email': u'cmdimkpa@gmail.com'}]}
+</pre>
+
+Notice that this combines data from "WebDirectory" and "Logins" blocks.
+
+2. Return all ledgers (grouped data)
+
+<pre>
+ledgers = return_all_lx()
+print ledgers
+</pre>
+
+Sample output:
+
+<pre>
+>>> ledgers
+{u'logins': {u'user': [u'altair444', u'shazam67@y', u'romulusTiDer'], u'pass': [u'ojwfjefjoejfeojf8765', u'lacazaette686', u'kljwdkwjdwdjd675']}, u'webdirectory': {u'phone': [u'1-800-212-3456', u'1-616-420-1123', u'1-820-444-6718'], u'name': [u'John Egglington', u'Mary Tipton', u'Monty Dimkpa'], u'email': [u'john.egglington@emailserve.net', u'mary_tipton@dowdandco.org', u'cmdimkpa@gmail.com']}}
+</pre>
+
+Notice that the data for each block has been grouped. Nice and easy.
+
+### Benefits
+
+BlockMagic allows you to securely and conveniently store your data in a blockchain. You can use the client seamlessly in your Python2 code while building web applications. No fancy configurations, accounts or registration required. No fees - forever. Just use our blockchain like your own web stickynote or clipboard. Your data is private and secure. Blockchain for your data.
+
+Enjoy using it!
 
 ### Public usage
 You are free to use this application in your Python projects. Other clients will be developed to manage connections from other environments (Node.js, etc) soon.
