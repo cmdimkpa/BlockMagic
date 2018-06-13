@@ -100,6 +100,38 @@ You can access your data as a `transaction` or a `ledger`. Transactions are stor
 
 There are 4 convenience functions you can use to retrieve data: `return_all_tx`, `return_one_tx`, `return_all_lx`, and `return_one_lx`. As you might have guessed, these allow you to: return all transactions, return one transaction, return all ledgers and return one ledger, respectively.
 
+For this example, we have created a block called "WebDirectory" and saved some data to it. Let's explore some scenarios for retrieving our data:
+
+1. store "WebDirectory" in a variable e.g.
+
+<pre>
+phonebook = return_one_tx("WebDirectory")
+print phonebook
+</pre>
+
+Sample output:
+<pre>
+>>> phonebook
+[{u'phone': u'1-800-212-3456', u'name': u'John Egglington', u'email': u'john.egglington@emailserve.net'}, {u'phone': u'1-616-420-1123', u'name': u'Mary Tipton', u'email': u'mary_tipton@dowdandco.org'}, {u'phone': u'1-820-444-6718', u'name': u'Monty Dimkpa', u'email': u'cmdimkpa@gmail.com'}]
+</pre>
+
+Notice the data was returned the way it was sent. With a ledger, it will be grouped:
+
+<pre>
+phonebook = return_one_lx("WebDirectory")
+print phonebook
+</pre>
+
+Sample output:
+<pre>
+>>> phonebook
+{u'phone': [u'1-800-212-3456', u'1-616-420-1123', u'1-820-444-6718'], u'name': [u'John Egglington', u'Mary Tipton', u'Monty Dimkpa'], u'email': [u'john.egglington@emailserve.net', u'mary_tipton@dowdandco.org', u'cmdimkpa@gmail.com']}
+</pre>
+
+Note: if you are operating on a terminal, you might see some diagnostic messages (even HTTP 500 errors), simply ignore them as your data will always be saved to the variable you have declared.
+
+So far, we have returned one transaction and one ledger. That's because we 
+
 ### Public usage
 You are free to use this application in your Python projects. Other clients will be developed to manage connections from other environments (Node.js, etc) soon.
 
