@@ -96,6 +96,10 @@ So your data is private (encrypted) even on an open connection. Also, the client
 
 ### Retrieving data: transactions and ledgers
 
+You can access your data as a `transaction` or a `ledger`. Transactions are stored the same way you sent them, while ledgers have been grouped by field, allowing you to access aggregated data for applications that require that format.
+
+There are 4 convenience functions you can use to retrieve data: `return_all_tx`, `return_one_tx`, `return_all_lx`, and `return_one_lx`. As you might have guessed, these allow you to: return all transactions, return one transaction, return all ledgers and return one ledger, respectively.
+
 ### Public usage
 You are free to use this application in your Python projects. Other clients will be developed to manage connections from other environments (Node.js, etc) soon.
 
