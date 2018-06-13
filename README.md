@@ -33,6 +33,45 @@ CreateBlock("DeviceActivity")
 CreateBlock("Logins")
 </pre>
 
+Running the above code generates the following success messages:
+
+<pre>
+'the block [webdirectory] was registered on the blockchain'
+'the block [saleslogs] was registered on the blockchain'
+'the block [deviceactivity] was registered on the blockchain'
+'the block [logins] was registered on the blockchain'
+</pre>
+
+Once you mine (create) a block, it takes up to a minute to be registered on the blockchain. The client automatically manages the connection in case you want to send data immediately.
+
+Your data is not public as it cannot be accessed from any device terminal other than the one used to create the block. Even if you use another terminal on the same device, the data will not be available. So the communication is a closed I/O circuit.
+
+#### Sending Data
+
+To send data, use the `SendData` command. Data must be sent as a list of records. e.g.
+
+<pre>
+myContacts = [
+    {
+      "name":"John Egglington",
+      "phone":"1-800-212-3456",
+      "email":"john.egglington@emailserve.net"
+    },
+    {
+      "name":"Mary Tipton",
+      "phone":"1-616-420-1123",
+      "email":"mary_tipton@dowdandco.org"
+    },
+    {
+      "name":"Monty Dimkpa",
+      "phone":"1-820-444-6718",
+      "email":"cmdimkpa@gmail.com"
+    }
+  ]
+
+SendData("WebDirectory",myContacts)
+</pre>
+
 ### Retrieving data: transactions and ledgers
 
 ### Public usage
