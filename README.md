@@ -1,16 +1,22 @@
 # BlockMagic for Python
 ## Simple & Fast Web I/O on a Secure Blockchain
-**BlockMagic** is a blockchain for secure data storage and retrieval. It delivers fast data I/O for web and mobile applications while ensuring security and privacy of your data.
+**BlockMagic** is an I/O Client for secure data storage and retrieval on the [Monty.Link] Blockchain. It delivers fast data I/O for web and mobile applications while ensuring security and privacy of your data.
 
-Install from Pip:
+[Monty.Link] is a blockchain for secure data storage. It is currently in beta. Disclaimer: while we support public use of the blockchain for educational or commercial projects and do not track or use the data you submit to the platform in any way, we are not liable for any challenges arising from loss of service or data. Do not store sensitive or confifential information on [Monty.Link].
+
+### Getting Started
+
+Install BlockMagic from Pip:
 
 <pre>
-  pip install block_magic
+  pip2 install block_magic
 </pre>
 
-Requires: Python 2.7
+Requires: Python 2
 
-To use within Python 2.7, import the client:
+### Using BlockMagic
+
+To use BlockMagic within Python 2 after installation via Pip, import the client in your code:
 
 <pre>
   from block_magic.blockmagic_client import *
