@@ -1,8 +1,6 @@
 # I/O Client for the BlockMagic data storage blockchain
 
-import json,os
-import urllib2
-import datetime
+import json,os,urllib2,datetime
 
 global WebRoot, LocalRoot, cache, cache_data, base_256, base_16, new_block_url, push_data_base_url, pull_data_base_url, ticker_started
 
@@ -146,11 +144,11 @@ def parameterize(data):
 		parameters+=k+"="+v+"&"
 	return "block_info:"+parameters[:-1]
 
-def PersistentRequest(url,limit=13):
+def PersistentRequest(url,limit=65):
 	server_response, code = FetchPageAsJSON(url)
 	retry_count = 0
 	while code != 200 and retry_count < limit:
-		status = timer(5)
+		status = timer(1)
 		print "retrying..."
 		server_response, code = FetchPageAsJSON(url)
 		print str(server_response)+" (target: %s)" % url
@@ -180,7 +178,7 @@ def return_all_lx():
 			keys = result.keys()
 			myLedger[blockname] = result[keys[-1]]
 		except:
-			print "null block: "+str(result)
+			print "null block encountered"
 	return myLedger
 
 def return_all_tx():
@@ -194,7 +192,7 @@ def return_all_tx():
 			keys = result.keys()
 			myTransactions[blockname] = result[keys[-1]]
 		except:
-			print "null block: "+str(result)
+			print "null block encountered"
 	return myTransactions
 
 def return_one_lx(blockname):
@@ -212,5 +210,10 @@ def return_one_tx(blockname):
 		return "document not found"
 	else:
 		return transactions[blockname]
+
+def list_my_blocks():
+	return ReadCache()["blocks"].keys()
+
+
 
 
