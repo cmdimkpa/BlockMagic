@@ -1,3 +1,4 @@
+![blockmagic logo](http://ceres-ai.com:6765/static/blockmagiclogo.jpg)
 # BlockMagic for Python
 ## Simple & Fast Web I/O on a Secure Blockchain
 **BlockMagic** is an I/O Client for secure data storage and retrieval on the [Monty.Link] Blockchain. It delivers fast data I/O for web applications while ensuring security and privacy of your data.
