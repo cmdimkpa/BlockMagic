@@ -3,7 +3,7 @@
 ## Simple & Fast Web I/O on a Secure Blockchain
 **BlockMagic** is an I/O Client for secure data storage and retrieval on the [Monty.Link] Blockchain. It delivers fast data I/O for web applications while ensuring security and privacy of your data.
 
-[Monty.Link] is a blockchain for secure data storage. It is currently in beta. Disclaimer: while we support public use of the blockchain for educational or commercial projects and do not track or use the data you submit to the platform in any way, we are not liable for any challenges arising from loss of service or data. Do not store sensitive or confidential information on [Monty.Link].
+[Monty.Link] is a blockchain for secure data storage. It is currently in beta. Disclaimer: We do not track or use the data you submit to the platform in any way. While we proactively ensure service availability and encourage the use of the blockchain for educational or commercial projects, we are not liable for any challenges arising from loss of service or data. We do not encourage storing sensitive or confidential information on [Monty.Link].
 
 ### Getting Started
 
@@ -73,7 +73,7 @@ myContacts = [
 SendData("WebDirectory",myContacts)   # send myContacts to "WebDirectory"
 </pre>
 
-The sending process is fully managed with a connection manager and reporting tool that displays status in your terminal. If you have just created the block, the connection manager will keep retrying until the block is available, then it will send all the data. It also handles and reports errors. In general, your data is always reliably delivered to the block.
+The sending process is fully managed with a connection manager and reporting tool that displays status in your terminal. If you have just created the block, the connection manager will keep retrying until the block is available, then it will send all the data. In general, your data is always reliably delivered to the block.
 
 An example process output:
 
@@ -129,7 +129,7 @@ Sample output:
 {u'phone': [u'1-800-212-3456', u'1-616-420-1123', u'1-820-444-6718'], u'name': [u'John Egglington', u'Mary Tipton', u'Monty Dimkpa'], u'email': [u'john.egglington@emailserve.net', u'mary_tipton@dowdandco.org', u'cmdimkpa@gmail.com']}
 </pre>
 
-Note: if you are operating on a terminal, you might see some diagnostic messages (even HTTP 500 errors), simply ignore them as your data will always be saved to the variable you have declared.
+Note: if you are operating on a terminal, you might see some diagnostic messages during operation. Simply ignore them as your data will always be saved to the variable you have declared.
 
 So far, we have returned one transaction and one ledger. That's because we only have data in one block. Let's store some data in the "Logins" block, so we can demonstrate returning all transactions and all ledgers.
 
