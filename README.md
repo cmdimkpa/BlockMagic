@@ -10,7 +10,7 @@
 Install BlockMagic from Pip:
 
 <pre>
-  pip2 install block_magic
+  pip install --upgrade block_magic
 </pre>
 
 Requires: Python 2
