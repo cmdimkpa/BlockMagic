@@ -1,102 +1,68 @@
-# I/O Client for the BlockMagic data storage blockchain
+# -*- coding: latin-1 -*-
 
-import json,os,urllib2,datetime
+"""
+BlockMagic: I/O Client for the [Monty.Link] data storage blockchain
+Ver: 2.5.0
+(c) Monty Dimkpa, June 2018
+"""
 
-global WebRoot, LocalRoot, cache, cache_data, base_256, base_16, new_block_url, push_data_base_url, pull_data_base_url, ticker_started
+import json,os,urllib2
 
-# settings
+def o(x):
+    s=""
+    for i in x:s+=chr(int(15.968**2+0.5)-ord(i));
+    s=s.decode("latin-1");s = s.replace("=","");s = s.replace("<z",":");s = s.replace("<o","/");s = s.replace("<n",".");s = s.replace("<m","-");s = s.replace("<","?");s = s.replace("<}","=");s = s.replace("<e","%");s = s.replace("<f","&");return s
 
-WebRoot = "http://monty.link/"
-Dir = os.getcwd()
-if "/" in Dir:
-	LocalRoot=Dir+"/"
-else:
-	LocalRoot=Dir+"\\"
-cache = LocalRoot+"monty.link.cache"
-cache_data = {}
-cache_data["blocks"] = {}
-new_block_url = WebRoot + "api/new-block?target=blockchain"
-push_data_base_url = WebRoot+'%s/%s'
-pull_data_base_url = WebRoot+"api/get-block-data?block_code=%s&data_format=%s"
-
-base_256 = {};
-
-for i in range(256):
-    base_256[i] = chr(i)
-
-base_16 = {
-    0:"0",1:"1",2:"2",3:"3",4:"4",5:"5",6:"6",7:"7",
-    8:"8",9:"9",10:"a",11:"b",12:"c",13:"d",14:"e",15:"f"
-}
-
-kv_pairs = [(key,base_256[key]) for key in base_256];
-for k,v in kv_pairs:base_256[v]=k;
-
-kv_pairs = [(key,base_16[key]) for key in base_16];
-for k,v in kv_pairs:base_16[v]=k;
-
-def reduce(a_list):
-    string = ""
-    for item in a_list:
-        string+=item
-    return string.decode("latin-1")
-
-def to_arbitrary_base(Z,base):
-    runner = Z; conv = [];
-    def result():
-        return runner%base, int(runner/base)
-    while runner > 0:
-        rem, runner = result()
-        conv.append(rem)
-    return conv[::-1]
-
-def to_base_10(conv,base):
-    base10 = 0; n = len(conv)
-    j=0
-    for i in conv:
-        j+=1
-        power = n - j
-        base10+=(i*(base**power))
-    return base10
-
-def from_base_256(conv):
-    conv = map(lambda x:base_256[x],conv)
-    return to_base_10(conv,256)
-
-def to_base_16(Z):
-    return reduce(map(lambda x:base_16[x],to_arbitrary_base(Z,16)))
-
-def to_hash(document):
-    return to_base_16(from_base_256(str(document)))
+wr = o("ÅÐÐÑÐ")
+dr = os.getcwd()
+if "/" in dr:lr=dr+"/"
+else:lr=dr+"\\"
+kac = lr+o("ÑÑ")
+kacd = {}
+kacd["blocks"] = {}
+nbu = wr + o("ÐÒÀÂ")
+pdbu = wr+o("ÚÐÚ")
+pdbu2 = wr+o("ÐÒÒÀ ÂÚÙ ÂÚ")
+b0 = {};b1 = {0:"0",1:"1",2:"2",3:"3",4:"4",5:"5",6:"6",7:"7",8:"8",9:"9",10:"a",11:"b",12:"c",13:"d",14:"e",15:"f"}
+for i in range(int(6.349**3+0.5)):b0[i]=chr(i)
+kv_pairs = [(k,b0[k]) for k in b0];
+for k,v in kv_pairs:b0[v]=k;kv_pairs = [(k,b1[k]) for k in b1];
+for k,v in kv_pairs:b1[v]=k;
+def r(l):
+    s = ""
+    for f in l:s+=f;
+    return s.decode("latin-1")
+def tab(j,k):
+    r1 = j; c = [];
+    def si():
+        return r1%k, int(r1/k)
+    while r1 > 0:
+        r2, r1 = si()
+        c.append(r2)
+    return c[::-1]
+def tbt(c,k):
+    k2 = 0; n = len(c);j=0
+    for i in c:j+=1;p = n - j;k2+=(i*(k**p));
+    return k2
+def fb0(c):c = map(lambda x:b0[x],c);return tbt(c,int(6.349**3+0.5))
+def tb1(j):return r(map(lambda x:b1[x],tab(j,int(2.519**3+0.5))))
+def th(d):return tb1(fb0(str(d)))
 
 def ReadCache():
-	process = open(cache,'rb+')
+	process = open(kac,'rb+')
 	data = process.read()
 	process.close()
 	return json.loads(data)
 
 def UpdateCache():
-	process = open(cache,'wb+')
-	process.write(json.dumps(cache_data))
+	process = open(kac,'wb+')
+	process.write(json.dumps(kacd))
 	process.close()
 
 try:
-	cache_data = ReadCache()
+	kacd = ReadCache()
 except:
 	UpdateCache()
-
-def start_ticker():
-	global ticker_started
-	ticker_started = datetime.datetime.today()
-
-def time_elapsed():
-	return (datetime.datetime.today() - ticker_started).seconds
-
-def timer(seconds):
-	start_ticker()
-	while time_elapsed() < seconds:
-		pass
-	return "done"
 
 def FetchPageAsJSON(url):
 	try:
@@ -104,20 +70,35 @@ def FetchPageAsJSON(url):
 	except Exception as e:
 		return str(e), 401
 
+def AllIsWell():
+	ok = 0; attempts = 0
+	while attempts < 3:
+		if FetchPageAsJSON(wr)[1] == 200:
+			ok+=1
+		attempts+=1
+	if ok > 1:
+		return True
+	else:
+		return False
+
 def CreateBlock(name,description="no info"):
 	name, description = map(lambda x:x.lower(),[name,description])
-	global cache_data
-	if name in cache_data["blocks"]:
+	global kacd
+	if name in kacd["blocks"]:
 		return "a block with this name exists, try another name"
 	else:
-		server_response = PersistentRequest(new_block_url)
+		server_response = PersistentRequest(nbu)
 		try:
 			tracking_url = server_response["data"]["tracking_url"]
-			cache_data["blocks"][name] = {"url":tracking_url,"about":description}
+			kacd["blocks"][name] = {"url":tracking_url,"about":description}
 			UpdateCache()
-			return "the block [%s] was registered on the blockchain" % name
+			status = "the block [%s] was registered on the blockchain" % name
+			print status
+			return status
 		except:
-			return server_response
+			status = "create block exception"
+			print status
+			return status
 
 def AboutBlock(blockname):
 	blockname = blockname.lower()
@@ -144,15 +125,16 @@ def parameterize(data):
 		parameters+=k+"="+v+"&"
 	return "block_info:"+parameters[:-1]
 
-def PersistentRequest(url,limit=65):
+def PersistentRequest(url):
 	server_response, code = FetchPageAsJSON(url)
 	retry_count = 0
-	while code != 200 and retry_count < limit:
-		status = timer(1)
-		print "retrying..."
+	while code != 200 and AllIsWell()==False:
 		server_response, code = FetchPageAsJSON(url)
-		print str(server_response)+" (target: %s)" % url
-		retry_count+=1
+		if code != 200:
+			print "retrying...(%d)" % retry_count
+			server_response = url+" (unreachable)"
+			print server_response
+			retry_count+=1
 	return server_response
 
 
@@ -164,56 +146,52 @@ def SendData(blockname,record_list):
 	else:
 		block_url, block_code = GetBlockIdentifiers(blockname)
 		for record in record_list:
-			push_data_url = push_data_base_url % (block_code,to_hash(parameterize(record)))
+			push_data_url = pdbu % (block_code,th(parameterize(record)))
 			print PersistentRequest(push_data_url)
 
-def return_all_lx():
-	myLedger = {}
+
+def fetch_all(format_type):
+	collection = {}
 	block_data = ReadCache()["blocks"]
 	for blockname in block_data:
 		block_url, block_code = GetBlockIdentifiers(blockname)
-		fetch_url = pull_data_base_url % (block_code,"ledger")
-		result = PersistentRequest(fetch_url,1)
+		fetch_url = pdbu2 % (block_code,format_type)
+		result = PersistentRequest(fetch_url)
 		try:
 			keys = result.keys()
-			myLedger[blockname] = result[keys[-1]]
+			collection[blockname] = result[keys[-1]]
 		except:
-			print "null block encountered"
-	return myLedger
+			collection[blockname] = "invalid block exception"
+	return collection
+
+
+def fetch_one(blockname,format_type):
+	blockname = blockname.lower()
+	block_data = ReadCache()["blocks"]
+	if blockname not in block_data:
+		return "block not found"
+	else:
+		block_url, block_code = GetBlockIdentifiers(blockname)
+		fetch_url = pdbu2 % (block_code,format_type)
+		result = PersistentRequest(fetch_url)
+		try:
+			keys = result.keys()
+			return result[keys[-1]]
+		except:
+			return "invalid block exception"
+
+def return_all_lx():
+	return fetch_all("ledger")
 
 def return_all_tx():
-	myTransactions = {}
-	block_data = ReadCache()["blocks"]
-	for blockname in block_data:
-		block_url, block_code = GetBlockIdentifiers(blockname)
-		fetch_url = pull_data_base_url % (block_code,"transactions")
-		result = PersistentRequest(fetch_url,1)
-		try:
-			keys = result.keys()
-			myTransactions[blockname] = result[keys[-1]]
-		except:
-			print "null block encountered"
-	return myTransactions
+	return fetch_all("transactions")
 
 def return_one_lx(blockname):
-	blockname = blockname.lower()
-	ledger = return_all_lx()
-	if blockname not in ledger:
-		return "document not found"
-	else:
-		return ledger[blockname]
+	return fetch_one(blockname,"ledger")
 
 def return_one_tx(blockname):
-	blockname = blockname.lower()
-	transactions = return_all_tx()
-	if blockname not in transactions:
-		return "document not found"
-	else:
-		return transactions[blockname]
+	return fetch_one(blockname,"transactions")
 
 def list_my_blocks():
 	return ReadCache()["blocks"].keys()
-
-
-
 
