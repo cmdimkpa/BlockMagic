@@ -73,7 +73,7 @@ def FetchPageAsJSON(url):
 def AllIsWell():
 	ok = 0; attempts = 0
 	while attempts < 3:
-		if FetchPageAsJSON("http://monty.link/testpage")[1] == 200:
+		if FetchPageAsJSON(o("ÅÐÐÑÐ"))[1] == 200:
 			ok+=1
 		attempts+=1
 	if ok > 1:
