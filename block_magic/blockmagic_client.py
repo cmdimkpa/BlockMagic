@@ -2,7 +2,7 @@
 
 """
 BlockMagic: I/O Client for the [Monty.Link] data storage blockchain
-Ver: 2.5.0
+Ver: 2.5.1
 (c) Monty Dimkpa, June 2018
 """
 
@@ -73,7 +73,7 @@ def FetchPageAsJSON(url):
 def AllIsWell():
 	ok = 0; attempts = 0
 	while attempts < 3:
-		if FetchPageAsJSON(wr)[1] == 200:
+		if FetchPageAsJSON("http://monty.link/testpage")[1] == 200:
 			ok+=1
 		attempts+=1
 	if ok > 1:
