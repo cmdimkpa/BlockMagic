@@ -2,16 +2,28 @@
 # test application: BlockMagic Payment Tracker
 
 import datetime,os,json
-import requests as http
-from statistics import mean, stdev, median, mode
+import requests as http       # you may need to `pip install` this
+from statistics import mean, stdev, median, mode       # you may need to `pip install` this
 
-global use_cases
+global use_cases, test_api_key, battery_of_tests, all_tests
+
+test_api_key = "c42c8084d97975bc5822465ece68f57a"
+
+def text_date_today():
+	today = datetime.datetime.today()
+	mm = str(today.month)
+	dd = str(today.day)
+	yyyy = str(today.year)
+	return mm+"/"+dd+"/"+yyyy
 
 use_cases = {
 	"create_account":"http://api.click-meter.com:5000/payment-tracker/create-account",
-	"push_receipt":'http://api.click-meter.com:5000/payment-tracker/push-receipt/{"from":"phil","to":"mary","amount":400,"key":"be52b8fbc0fea0ca3783481b806266e5"}',
-	"query_payments":'http://api.click-meter.com:5000/payment-tracker/payment-summary/{"key":"be52b8fbc0fea0ca3783481b806266e5","payer":"phil","payee":"*","from_date":"6/16/2018","to_date":"6/16/2018"}'
+	"push_receipt":'http://api.click-meter.com:5000/payment-tracker/push-receipt/{"from":"phil","to":"mary","amount":400,"key":"%s"}' % test_api_key,
+	"query_payments":'http://api.click-meter.com:5000/payment-tracker/payment-summary/{"key":"%s","payer":"phil","payee":"*","from_date":"%s","to_date":"%s"}' % (test_api_key, text_date_today(), text_date_today())
 }
+
+battery_of_tests = {"mean":mean,"median":median,"mode":mode,"stdev":stdev}
+all_tests = battery_of_tests.keys()
 
 def time_it(url):
 	start = datetime.datetime.today()
@@ -26,26 +38,14 @@ def reliability(url):
 
 def battery(data):
 	result = {}
-	try:
-		result["mean"] = mean(data)
-	except:
-		pass
-	try:
-		result["median"] = median(data)
-	except:
-		pass
-	try:
-		result["mode"] = mode(data)
-	except:
-		pass
-	try:
-		result["stdev"] = stdev(data)
-	except:
-		pass
+	for test in all_tests:
+		try:
+			result[test] = battery_of_tests[test](data)
+		except:
+			pass
 	return result
 
-
-def test_rig(rounds=50):
+def test_rig(rounds=100):
 	test_results = {"data":{"response_time":{},"reliability":{}},"analysis":{"response_time":{},"reliability":{}}}
 	for case in use_cases:
 		test_results["data"]["response_time"][case] = []
