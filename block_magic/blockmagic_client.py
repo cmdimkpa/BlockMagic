@@ -81,6 +81,11 @@ def AllIsWell():
 	else:
 		return False
 
+def version():
+	return "2.5.1"
+
+ver = version
+
 def CreateBlock(name,description="no info"):
 	name, description = map(lambda x:x.lower(),[name,description])
 	global kacd
@@ -93,11 +98,9 @@ def CreateBlock(name,description="no info"):
 			kacd["blocks"][name] = {"url":tracking_url,"about":description}
 			UpdateCache()
 			status = "the block [%s] was registered on the blockchain" % name
-			print status
 			return status
 		except:
 			status = "create block exception"
-			print status
 			return status
 
 def AboutBlock(blockname):
