@@ -2,7 +2,7 @@
 
 """
 BlockMagic: I/O Client for the [Monty.Link] data storage blockchain
-Ver: 2.5.1
+Ver: 2.5.2
 (c) Monty Dimkpa, June 2018
 """
 
@@ -82,7 +82,7 @@ def AllIsWell():
 		return False
 
 def version():
-	return "2.5.1"
+	return "2.5.2"
 
 ver = version
 
@@ -150,8 +150,22 @@ def SendData(blockname,record_list):
 		block_url, block_code = GetBlockIdentifiers(blockname)
 		for record in record_list:
 			push_data_url = pdbu % (block_code,th(parameterize(record)))
-			print PersistentRequest(push_data_url)
+			return PersistentRequest(push_data_url)
 
+def send_data(blockname,record_list):
+	status = SendData(blockname,record_list)
+	while bool(status!="block not found" and str(status)!="{u'message': u'Ledger updated', u'code': 201}"):
+		status = SendData(blockname,record_list)
+	return status
+
+
+def persistent_retrieve(url):
+	result = PersistentRequest(url)
+	try:
+		keys = result.keys()
+		return result[keys[-1]]
+	except:
+		return persistent_retrieve(url)
 
 def fetch_all(format_type):
 	collection = {}
@@ -159,12 +173,7 @@ def fetch_all(format_type):
 	for blockname in block_data:
 		block_url, block_code = GetBlockIdentifiers(blockname)
 		fetch_url = pdbu2 % (block_code,format_type)
-		result = PersistentRequest(fetch_url)
-		try:
-			keys = result.keys()
-			collection[blockname] = result[keys[-1]]
-		except:
-			collection[blockname] = "invalid block exception"
+		collection[blockname] = persistent_retrieve(fetch_url)
 	return collection
 
 
@@ -176,12 +185,7 @@ def fetch_one(blockname,format_type):
 	else:
 		block_url, block_code = GetBlockIdentifiers(blockname)
 		fetch_url = pdbu2 % (block_code,format_type)
-		result = PersistentRequest(fetch_url)
-		try:
-			keys = result.keys()
-			return result[keys[-1]]
-		except:
-			return "invalid block exception"
+		return persistent_retrieve(fetch_url)
 
 def return_all_lx():
 	return fetch_all("ledger")
@@ -190,7 +194,7 @@ def return_all_tx():
 	return fetch_all("transactions")
 
 def return_one_lx(blockname):
-	return fetch_one(blockname,"ledger")
+	return fetch_one(blockname,"ledger") 
 
 def return_one_tx(blockname):
 	return fetch_one(blockname,"transactions")
