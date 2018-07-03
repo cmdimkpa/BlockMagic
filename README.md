@@ -24,7 +24,7 @@ To use BlockMagic after installation via Pip, import the client in your Python2 
   from block_magic.blockmagic_client import *
 </pre>
 
-### Storing data: creating blocks and CRUD operations with RigoDB
+### Storing data: creating blocks and performing CRUD operations with RigoDB
 
 You can store data on the blockchain by creating blocks. Create a different block for each of your data stores e.g. "WebDirectory", "SalesLogs", "DeviceActivity", "Logins", and so on. It's as easy as invoking the `CreateBlock` command:
 
