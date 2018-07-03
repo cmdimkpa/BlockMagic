@@ -48,6 +48,14 @@ Once you mine (create) a block, it takes up to a minute to be registered on the 
 
 Your data is not public as it cannot be accessed from any device terminal other than the one used to create the block. Even if you use another terminal type on the same device, the data will not be available. So the communication is a closed I/O circuit.
 
+#### Working with RigoDB: CRUD operations
+
+The first thing to do is to create a database:
+
+<pre>
+RigoDB("new_database",{"dbname":"<DB_NAME_HERE>","dbpassword":"<DB_PASSWORD_HERE>"})
+</pre>
+
 #### Sending Data
 
 To send data, use the `send_data` command. Data must be sent as a list of records. e.g.
@@ -205,14 +213,12 @@ Notice that the data for each block has been grouped. Nice and easy.
 
 ### Benefits
 
-BlockMagic allows you to securely and conveniently store your data in a blockchain. You can use the client seamlessly in your Python2 code while building web applications. No fancy configurations, accounts or registration required. No fees - forever. Just use our blockchain like your own web stickynote or clipboard. Your data is private and secure. Blockchain for your data.
-
-Enjoy using it!
+BlockMagic allows you to securely and conveniently store your data in a blockchain. You can use the client seamlessly in your Python2 code while building web applications. No fancy configurations, accounts or registration required. No fees or gimmicks -- Just easy data storage and retrieval.
 
 ### Public usage
-You are free to use this application in your Python projects. Other clients will be developed to manage connections from other environments (Node.js, etc) soon.
+You are free to use this application in your Python projects. 
 
 ### Keep in touch
-Send questions or comments to: cmdimkpa@gmail.com
+Send questions or comments to: cmdimkpa (at) gmail.com
 
 Happy I/O !
