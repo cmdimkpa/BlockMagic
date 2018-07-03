@@ -319,12 +319,9 @@ Notice that the data for each block has been grouped. Nice and easy.
 
 ### Benefits
 
-BlockMagic allows you to securely and conveniently store your data in a blockchain. You can use the client seamlessly in your Python2 code while building web applications. No fancy configurations, accounts or registration required. No fees or gimmicks -- Just easy data storage and retrieval.
+BlockMagic allows you to securely and conveniently store your data in a blockchain. With RigoDb, an add-on product, you can enjoy traditional CRUD database facilities prior to immutable data commits to the blockchain. You can use BlockMagic or  [**RigoDB**](https://github.com/cmdimkpa/Rigo) seamlessly in your Python2 code while building web applications. No fancy configurations, accounts or registration required. No fees or gimmicks -- Just easy data storage and retrieval.
 
-### Public usage
-You are free to use this application in your Python projects. 
-
-### Keep in touch
+### Connect
 Send questions or comments to: cmdimkpa (at) gmail.com
 
 Happy I/O !
