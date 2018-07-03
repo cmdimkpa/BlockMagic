@@ -66,33 +66,30 @@ Then we need to add a table:
 
 Notice that in addition to specifying a table name, we had to include a block name as well: that is because every table must point to a block. When you finally commit your table, the data in the table will be transferred to the block you designate, and the table itself will be destroyed. This must be a valid, existing block -- else you can just create one and try again.
 
-
-
-#### Sending Data
-
-To send data, use the `send_data` command. Data must be sent as a list of records. e.g.
+Let's add some data (say, some phone records) to our table:
 
 <pre>
-myContacts = [
-    {
-      "name":"John Egglington",
-      "phone":"1-800-212-3456",
-      "email":"john.egglington@emailserve.net"
-    },
-    {
-      "name":"Mary Tipton",
-      "phone":"1-616-420-1123",
-      "email":"mary_tipton@dowdandco.org"
-    },
-    {
-      "name":"Monty Dimkpa",
-      "phone":"1-820-444-6718",
-      "email":"cmdimkpa@gmail.com"
-    }
-  ]
-
-send_data("WebDirectory",myContacts)   # send myContacts to "WebDirectory"
+>>> RigoDB("new_entry",{"dbname":"DB_NAME_HERE","dbpassword":"DB_PASSWORD_HERE", "tablename":"table_name_here", "entry":{"name":"John Egglington","phone":"1-800-212-3456","email":"john.egglington@emailserve.net"}})
+'WriteTableSuccess: table: TABLE_NAME_HERE  was updated'
 </pre>
+
+Note: always use lowercase when providing credentials
+
+Now, let's add some more data:
+
+<pre>
+>>> RigoDB("new_entry",{"dbname":"DB_NAME_HERE","dbpassword":"DB_PASSWORD_HERE", "tablename":"table_name_here", "entry":{"name":"Monty Dimkpa","phone":"1-820-444-6718","email":"cmdimkpa@gmail.com"}})
+'WriteTableSuccess: table: TABLE_NAME_HERE  was updated'
+</pre>
+
+<pre>
+>>> RigoDB("new_entry",{"dbname":"DB_NAME_HERE","dbpassword":"DB_PASSWORD_HERE", "tablename":"table_name_here", "entry":{"name":"Mary Tipton","phone":"1-616-420-1123","email":"mary_tipton@dowdandco.org"}})
+'WriteTableSuccess: table: TABLE_NAME_HERE  was updated'
+</pre>
+
+#### Committing Data to the Blockchain
+
+Prior to committing your data, you can hold it in your RigoDB tables and databases without limit. Once you commit, however, the data disappears from your local persistence and is transferred to the Blockchain. 
 
 The sending process is fully managed with a connection manager and reporting tool that displays status in your terminal. If you have just created the block, the connection manager will keep retrying until the block is available, then it will send all the data. In general, your data is always reliably delivered to the block.
 
