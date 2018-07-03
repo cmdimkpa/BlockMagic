@@ -64,7 +64,7 @@ Then we need to add a table:
 'CreateTableSuccess: table: TABLE_NAME_HERE was created'
 </pre>
 
-Notice that in addition to specifying a table name, we had to include a block name as well: that is because every table must point to a block. When you finally commit your table, the data in the table will be transferred to the block you designate, and the table itself will be destroyed. This must be a valid, existing block -- else you can just create one and try again.
+Notice that in addition to specifying a table name, we had to include a block name as well: that is because every table must point to a block. When you finally commit your table, the data in the table will be transferred to the block you designate, and the table itself will be destroyed. Without committing, you can hold on to the table and the data in it as long as you like.
 
 Let's add some data (say, some phone records) to our table:
 
@@ -87,9 +87,21 @@ Now, let's add some more data:
 'WriteTableSuccess: table: TABLE_NAME_HERE  was updated'
 </pre>
 
+OK, let's see if we can get the data back:
+
+<pre>
+>>> RigoDB("view_entries",{"dbname":"DB_NAME_HERE","dbpassword":"DB_PASSWORD_HERE", "tablename":"table_name_here", "entryPos":"*"})
+[{'phone': '1-800-212-3456', 'name': 'John Egglington', 'email': 'john.egglington@emailserve.net'}, {'phone': '1-616-420-1123', 'name': 'Mary Tipton', 'email': 'mary_tipton@dowdandco.org'}, {'phone': '1-820-444-6718', 'name': 'Monty Dimkpa', 'email': 'cmdimkpa@gmail.com'}]
+</pre>
+
+That was easy enough. Now let's review committing to the blockchain.
+
+
 #### Committing Data to the Blockchain
 
-Prior to committing your data, you can hold it in your RigoDB tables and databases without limit. Once you commit, however, the data disappears from your local persistence and is transferred to the Blockchain. 
+Prior to committing your data, you can hold it in your RigoDB tables and databases without limit. Once you commit, however, the data disappears from your local persistence and is transferred to the Blockchain.
+
+
 
 The sending process is fully managed with a connection manager and reporting tool that displays status in your terminal. If you have just created the block, the connection manager will keep retrying until the block is available, then it will send all the data. In general, your data is always reliably delivered to the block.
 
