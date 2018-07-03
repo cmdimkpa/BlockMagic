@@ -100,7 +100,52 @@ OK, let's see if we can get the data back:
 [{'phone': '1-800-212-3456', 'name': 'John Egglington', 'email': 'john.egglington@emailserve.net'}, {'phone': '1-616-420-1123', 'name': 'Mary Tipton', 'email': 'mary_tipton@dowdandco.org'}, {'phone': '1-820-444-6718', 'name': 'Monty Dimkpa', 'email': 'cmdimkpa@gmail.com'}]
 </pre>
 
-That was easy enough. Now let's review committing this data to the blockchain.
+That was easy enough. We can also edit and delete data:
+
+Editing:
+
+Let's change substitute the data on the second row with another dataset:
+
+<pre>
+>>> RigoDB("edit_entry",{"dbname":"DB_NAME_HERE","dbpassword":"DB_PASSWORD_HERE", "tablename":"table_name_here", "entryPos":1, "new":{'phone': '1-222-520-4150', 'name': 'Eduardo Salazar', 'email': 'eddy_french@dowdandco.org'}})
+
+'EditTableSuccess: table: TABLE_NAME_HERE was updated at row: 1'
+</pre>
+
+Note: row numbers are zero-indexed; meaning the first row is 0 and the second is 1, and so on.
+
+Now, let's see if the data changed:
+
+<pre>
+>>> RigoDB("view_entries",{"dbname":"DB_NAME_HERE","dbpassword":"DB_PASSWORD_HERE", "tablename":"table_name_here", "entryPos":"*"})
+
+[{'phone': '1-800-212-3456', 'name': 'John Egglington', 'email': 'john.egglington@emailserve.net'}, {'phone': '1-222-520-4150', 'name': 'Eduardo Salazar', 'email': 'eddy_french@dowdandco.org'}, {'phone': '1-820-444-6718', 'name': 'Monty Dimkpa', 'email': 'cmdimkpa@gmail.com'}]
+
+
+</pre>
+
+It sure did. How about deleting?
+
+Deleting data:
+
+Let's delete the 2nd row we just edited:
+
+<pre>
+>>> RigoDB("delete_entry",{"dbname":"DB_NAME_HERE","dbpassword":"DB_PASSWORD_HERE", "tablename":"table_name_here", "entryPos":1})
+
+'EditTableSuccess: row: 1 of table: TABLE_NAME_HERE was deleted'
+</pre>
+
+Let's verify:
+<pre>
+>>> RigoDB("view_entries",{"dbname":"DB_NAME_HERE","dbpassword":"DB_PASSWORD_HERE", "tablename":"table_name_here", "entryPos":"*"})
+
+[{'phone': '1-800-212-3456', 'name': 'John Egglington', 'email': 'john.egglington@emailserve.net'}, {'phone': '1-820-444-6718', 'name': 'Monty Dimkpa', 'email': 'cmdimkpa@gmail.com'}]
+</pre>
+
+The data is no longer there. OK so everything works. For a more comprehensive RigoDB Tutorial, go to the [**RigoDB Github page**](https://github.com/cmdimkpa/Rigo).
+
+Now let's review committing this data to the blockchain.
 
 
 #### Committing Data to the Blockchain
