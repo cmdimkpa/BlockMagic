@@ -4,7 +4,7 @@
 ## Simple & Fast Web I/O on a Secure Blockchain
 **BlockMagic** is an I/O Client for secure data storage and retrieval on the [Monty.Link] Blockchain. It delivers fast data I/O for web applications while ensuring security and privacy of your data.
 
-[**RigoDB**](https://github.com/cmdimkpa/Rigo) is a lightweight database application for Python, and it is bundled with BlockMagic to provide CRUD capabities prior to final commits to the blockchain. This is because blockchains are **immutable**, meaning the data you store cannot be altered -- however, with RigoDB, you can enjoy traditional CRUD database facilities until you are ready to make a final commit to the blockchain.
+[**RigoDB**](https://github.com/cmdimkpa/Rigo) is a lightweight database application for Python, and it is bundled with BlockMagic to provide CRUD capabilities prior to final commits to the blockchain. This is because blockchains are **immutable**, meaning the data you store cannot be altered -- however, with RigoDB, you can enjoy traditional CRUD database facilities until you are ready to make a final commit to the blockchain.
 
 ### Getting Started
 
@@ -44,16 +44,17 @@ Running the above code generates the following success messages:
 'the block [logins] was registered on the blockchain'
 </pre>
 
-Once you mine (create) a block, it takes up to a minute to be registered on the blockchain. The client automatically manages the connection in case you want to send data immediately.
+Once you mine (create) a block, it takes up to a minute to be registered on the blockchain. The client automatically manages the connection for you in case you want to send data immediately.
 
 Your data is not public as it cannot be accessed from any device terminal other than the one used to create the block. Even if you use another terminal type on the same device, the data will not be available. So the communication is a closed I/O circuit.
 
 #### Working with RigoDB: CRUD operations
 
-The first thing to do is to create a database:
+The first thing to do when planning to save data is to create a database:
 
 <pre>
 >>> RigoDB("new_database",{"dbname":"DB_NAME_HERE","dbpassword":"DB_PASSWORD_HERE"})
+
 'CreateDBSuccess: database: DB_NAME_HERE was created'
 </pre>
 
@@ -61,29 +62,33 @@ Then we need to add a table:
 
 <pre>
 >>> RigoDB("add_table",{"dbname":"DB_NAME_HERE","dbpassword":"DB_PASSWORD_HERE", "tablename":"TABLE_NAME_HERE", "blockname":"TARGET_BLOCK_HERE"})
+
 'CreateTableSuccess: table: TABLE_NAME_HERE was created'
 </pre>
 
-Notice that in addition to specifying a table name, we had to include a block name as well: that is because every table must point to a block. When you finally commit your table, the data in the table will be transferred to the block you designate, and the table itself will be destroyed. Without committing, you can hold on to the table and the data in it as long as you like.
+Notice that in addition to specifying a table name, we had to include a block name as well: that is because every table must point to a block. When you finally commit your table, the data in the table will be transferred to the block you designate, and the table itself will cease to exist. Without committing, you can hold on to the table and the data in it as long as you wish.
 
 Let's add some data (say, some phone records) to our table:
 
 <pre>
 >>> RigoDB("new_entry",{"dbname":"DB_NAME_HERE","dbpassword":"DB_PASSWORD_HERE", "tablename":"table_name_here", "entry":{"name":"John Egglington","phone":"1-800-212-3456","email":"john.egglington@emailserve.net"}})
+
 'WriteTableSuccess: table: TABLE_NAME_HERE  was updated'
 </pre>
 
-Note: always use lowercase when providing credentials
+Note: always use lowercase when providing credentials. Also, note that you must always provide an Object (e.g. JSON document or Python dict) as your entry. 
 
 Now, let's add some more data:
 
 <pre>
 >>> RigoDB("new_entry",{"dbname":"DB_NAME_HERE","dbpassword":"DB_PASSWORD_HERE", "tablename":"table_name_here", "entry":{"name":"Monty Dimkpa","phone":"1-820-444-6718","email":"cmdimkpa@gmail.com"}})
+
 'WriteTableSuccess: table: TABLE_NAME_HERE  was updated'
 </pre>
 
 <pre>
 >>> RigoDB("new_entry",{"dbname":"DB_NAME_HERE","dbpassword":"DB_PASSWORD_HERE", "tablename":"table_name_here", "entry":{"name":"Mary Tipton","phone":"1-616-420-1123","email":"mary_tipton@dowdandco.org"}})
+
 'WriteTableSuccess: table: TABLE_NAME_HERE  was updated'
 </pre>
 
@@ -91,10 +96,11 @@ OK, let's see if we can get the data back:
 
 <pre>
 >>> RigoDB("view_entries",{"dbname":"DB_NAME_HERE","dbpassword":"DB_PASSWORD_HERE", "tablename":"table_name_here", "entryPos":"*"})
+
 [{'phone': '1-800-212-3456', 'name': 'John Egglington', 'email': 'john.egglington@emailserve.net'}, {'phone': '1-616-420-1123', 'name': 'Mary Tipton', 'email': 'mary_tipton@dowdandco.org'}, {'phone': '1-820-444-6718', 'name': 'Monty Dimkpa', 'email': 'cmdimkpa@gmail.com'}]
 </pre>
 
-That was easy enough. Now let's review committing to the blockchain.
+That was easy enough. Now let's review committing this data to the blockchain.
 
 
 #### Committing Data to the Blockchain
