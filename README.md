@@ -10,10 +10,10 @@
 Install BlockMagic from Pip:
 
 <pre>
-  pip install --upgrade block_magic
+  pip2 install --upgrade block_magic
 </pre>
 
-Requires: Python 2
+Requires: Python 2.7
 
 ### Using BlockMagic
 
@@ -49,7 +49,7 @@ Your data is not public as it cannot be accessed from any device terminal other 
 
 #### Sending Data
 
-To send data, use the `SendData` command. Data must be sent as a list of records. e.g.
+To send data, use the `send_data` command. Data must be sent as a list of records. e.g.
 
 <pre>
 myContacts = [
@@ -70,7 +70,7 @@ myContacts = [
     }
   ]
 
-SendData("WebDirectory",myContacts)   # send myContacts to "WebDirectory"
+send_data("WebDirectory",myContacts)   # send myContacts to "WebDirectory"
 </pre>
 
 The sending process is fully managed with a connection manager and reporting tool that displays status in your terminal. If you have just created the block, the connection manager will keep retrying until the block is available, then it will send all the data. In general, your data is always reliably delivered to the block.
@@ -142,7 +142,7 @@ SampleLogins = [
 </pre>
 
 <pre>
-SendData("Logins",SampleLogins)
+send_data("Logins",SampleLogins)
 </pre>
 
 Sample output:
