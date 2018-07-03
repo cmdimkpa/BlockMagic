@@ -104,7 +104,7 @@ That was easy enough. We can also edit and delete data:
 
 Editing:
 
-Let's change substitute the data on the second row with another dataset:
+Let's substitute the data on the second row with another dataset:
 
 <pre>
 >>> RigoDB("edit_entry",{"dbname":"DB_NAME_HERE","dbpassword":"DB_PASSWORD_HERE", "tablename":"table_name_here", "entryPos":1, "new":{'phone': '1-222-520-4150', 'name': 'Eduardo Salazar', 'email': 'eddy_french@dowdandco.org'}})
