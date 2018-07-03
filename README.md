@@ -152,6 +152,40 @@ Now let's review committing this data to the blockchain.
 
 Prior to committing your data, you can hold it in your RigoDB tables and databases without limit. Once you commit, however, the data disappears from your local persistence and is transferred to the Blockchain.
 
+You can either **commit a table** or **commit a database**:
+
+1. Committing a table
+
+For example, let's commit our sample table:
+
+<pre>
+>>> RigoDB("commit_table",{"dbname":"DB_NAME_HERE","dbpassword":"DB_PASSWORD_HERE", "tablename":"table_name_here"})
+
+'the table: [TABLE_NAME_HERE] was committed to the blockchain and deleted from database: [DB_NAME_HERE]'
+
+</pre>
+
+Let's see if we can still access the table:
+
+<pre>
+>>> RigoDB("view_entries",{"dbname":"DB_NAME_HERE","dbpassword":"DB_PASSWORD_HERE", "tablename":"table_name_here", "entryPos":"*"})
+
+'TableAccessError: table not found'
+</pre>
+
+So the table is gone, as expected.
+
+Now,the table was pointing to a block called "TARGET_BLOCK_HERE", so let's quickly see if we can fetch the data from this block on the blockchain:
+
+<pre>
+>>> return_one_tx("TARGET_BLOCK_HERE")
+
+[{u'phone': u'1-800-212-3456', u'name': u'John Egglington', u'email': u'john.egglington@emailserve.net'}, {u'phone': u'1-820-444-6718', u'name': u'Monty Dimkpa', u'email': u'cmdimkpa@gmail.com'}]
+
+</pre>
+
+So this worked perfectly.
+
 
 
 The sending process is fully managed with a connection manager and reporting tool that displays status in your terminal. If you have just created the block, the connection manager will keep retrying until the block is available, then it will send all the data. In general, your data is always reliably delivered to the block.
