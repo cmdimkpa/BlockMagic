@@ -1,13 +1,14 @@
 ![blockmagic logo](http://ceres-ai.com:6765/static/blockmagiclogo.jpg)
+![rigo logo](http://ceres-ai.com:6765/static/logo-rigo.jpg)
 # BlockMagic for Python
 ## Simple & Fast Web I/O on a Secure Blockchain
 **BlockMagic** is an I/O Client for secure data storage and retrieval on the [Monty.Link] Blockchain. It delivers fast data I/O for web applications while ensuring security and privacy of your data.
 
-[Monty.Link] is a blockchain for secure data storage. It is currently in beta. Disclaimer: We do not track or use the data you submit to the platform in any way. While we proactively ensure service availability and encourage the use of the blockchain for educational or commercial projects, we are not liable for any challenges arising from loss of service or data. We do not encourage storing sensitive or confidential information on [Monty.Link].
+[**RigoDB**](https://github.com/cmdimkpa/Rigo) is a lightweight database application for Python, and it is bundled with BlockMagic to provide CRUD capabities prior to final commits to the blockchain. This is because blockchains are **immutable**, meaning the data you store cannot be altered -- however, with RigoDB, you can enjoy traditional CRUD database facilities until you are ready to make a final commit to the blockchain.
 
 ### Getting Started
 
-Install BlockMagic from Pip:
+Install BlockMagic from Pip (already bundled with RigoDB as from v2.6):
 
 <pre>
   pip2 install --upgrade block_magic
@@ -23,7 +24,7 @@ To use BlockMagic after installation via Pip, import the client in your Python2 
   from block_magic.blockmagic_client import *
 </pre>
 
-### Storing data: creating blocks and sending data
+### Storing data: creating blocks and performing CRUD operations with RigoDB
 
 You can store data on the blockchain by creating blocks. Create a different block for each of your data stores e.g. "WebDirectory", "SalesLogs", "DeviceActivity", "Logins", and so on. It's as easy as invoking the `CreateBlock` command:
 
