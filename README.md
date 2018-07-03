@@ -186,9 +186,30 @@ Now, the table was pointing to a block called "TARGET_BLOCK_HERE", so let's quic
 
 So this worked perfectly.
 
+2. Committing a database
 
+Committing a database effectively commits all the tables in the database, before removing it from RigoDB persistence. 
 
-The sending process is fully managed with a connection manager and reporting tool that displays status in your terminal. If you have just created the block, the connection manager will keep retrying until the block is available, then it will send all the data. In general, your data is always reliably delivered to the block.
+Let's go ahead and just commit our test database:
+
+<pre>
+>>> RigoDB("commit_database",{"dbname":"DB_NAME_HERE","dbpassword":"DB_PASSWORD_HERE"})
+
+'the database: [DB_NAME_HERE] was committed to the blockchain and deleted from your Rigo instance'
+
+</pre>
+
+A quick check if its still there:
+
+<pre>
+>>> RigoDB("view_entries",{"dbname":"DB_NAME_HERE","dbpassword":"DB_PASSWORD_HERE", "tablename":"table_name_here", "entryPos":"*"})
+
+'DBAccessError: could not connect to database [not found]'
+</pre>
+
+OK, so that's how to use BlockMagic and RigoDB in a nutshell.
+
+Data transport to the blockchain is fully managed by a connection manager and reporting tool that displays status in your terminal. If you have just created the block, the connection manager will keep retrying until the block is available, then it will send all the data. In general, your data is always reliably delivered to the block.
 
 An example process output:
 
@@ -319,7 +340,7 @@ Notice that the data for each block has been grouped. Nice and easy.
 
 ### Benefits
 
-BlockMagic allows you to securely and conveniently store your data in a blockchain. With RigoDb, an add-on product, you can enjoy traditional CRUD database facilities prior to immutable data commits to the blockchain. You can use BlockMagic or  [**RigoDB**](https://github.com/cmdimkpa/Rigo) seamlessly in your Python2 code while building web applications. No fancy configurations, accounts or registration required. No fees or gimmicks -- Just easy data storage and retrieval.
+BlockMagic allows you to securely and conveniently store your data in a blockchain. With RigoDB, an add-on product, you can enjoy traditional CRUD database facilities prior to immutable data commits to the blockchain. You can use BlockMagic or  [**RigoDB**](https://github.com/cmdimkpa/Rigo) seamlessly in your Python2 code while building web applications. No fancy configurations, accounts or registration required. No fees or gimmicks -- Just easy data storage and retrieval.
 
 ### Connect
 Send questions or comments to: cmdimkpa (at) gmail.com
