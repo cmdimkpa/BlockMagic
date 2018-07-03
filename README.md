@@ -175,7 +175,7 @@ Let's see if we can still access the table:
 
 So the table is gone, as expected.
 
-Now,the table was pointing to a block called "TARGET_BLOCK_HERE", so let's quickly see if we can fetch the data from this block on the blockchain:
+Now, the table was pointing to a block called "TARGET_BLOCK_HERE", so let's quickly see if we can fetch the data from this block on the blockchain:
 
 <pre>
 >>> return_one_tx("TARGET_BLOCK_HERE")
