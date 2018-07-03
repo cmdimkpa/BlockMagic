@@ -106,7 +106,7 @@ def AllIsWell():
 		return False
 
 def version():
-	return "2.5.2"
+	return "2.6"
 
 ver = version
 
