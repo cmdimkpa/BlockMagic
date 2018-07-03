@@ -53,8 +53,20 @@ Your data is not public as it cannot be accessed from any device terminal other 
 The first thing to do is to create a database:
 
 <pre>
-RigoDB("new_database",{"dbname":"<DB_NAME_HERE>","dbpassword":"<DB_PASSWORD_HERE>"})
+>>> RigoDB("new_database",{"dbname":"DB_NAME_HERE","dbpassword":"DB_PASSWORD_HERE"})
+'CreateDBSuccess: database: DB_NAME_HERE was created'
 </pre>
+
+Then we need to add a table:
+
+<pre>
+>>> RigoDB("add_table",{"dbname":"DB_NAME_HERE","dbpassword":"DB_PASSWORD_HERE", "tablename":"TABLE_NAME_HERE", "blockname":"TARGET_BLOCK_HERE"})
+'CreateTableSuccess: table: TABLE_NAME_HERE was created'
+</pre>
+
+Notice that in addition to specifying a table name, we had to include a block name as well: that is because every table must point to a block. When you finally commit your table, the data in the table will be transferred to the block you designate, and the table itself will be destroyed. This must be a valid, existing block -- else you can just create one and try again.
+
+
 
 #### Sending Data
 
