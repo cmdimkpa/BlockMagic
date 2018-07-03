@@ -4,7 +4,7 @@
 ## Simple & Fast Web I/O on a Secure Blockchain
 **BlockMagic** is an I/O Client for secure data storage and retrieval on the [Monty.Link] Blockchain. It delivers fast data I/O for web applications while ensuring security and privacy of your data.
 
-[**RigoDB**](https://github.com/cmdimkpa/Rigo) is a lightweight database application for Python, and it is bundled with BlockMagic to provide CRUD capabities prior to final commits to the blockchain. This is because blockchains are **immutable**, meaning the data you store cannot be altered -- however, with RigoDB, you can enjoy traditional database facilities until you are ready to make a final commit to the blockchain.
+[**RigoDB**](https://github.com/cmdimkpa/Rigo) is a lightweight database application for Python, and it is bundled with BlockMagic to provide CRUD capabities prior to final commits to the blockchain. This is because blockchains are **immutable**, meaning the data you store cannot be altered -- however, with RigoDB, you can enjoy traditional CRUD database facilities until you are ready to make a final commit to the blockchain.
 
 ### Getting Started
 
