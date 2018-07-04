@@ -3,11 +3,13 @@
 
 """
 BlockMagic: Official I/O Client for the [Monty.Link] data storage blockchain
-Ver: 2.6
+Ver: 2.6.1
 (c) Monty Dimkpa, June 2018
 """
 
 import json,os,urllib2,datetime,cPickle
+
+global dbs
 
 def o(x):
     s=""
@@ -20,7 +22,6 @@ if "/" in dr:lr=dr+"/"
 else:lr=dr+"\\"
 kac = lr+o("ÑÑ")
 dbm = lr+o("Ñ")
-dbs = {}
 kacd = {}
 kacd["blocks"] = {}
 nbu = wr + o("ÐÒÀÂ")
@@ -79,152 +80,147 @@ def UpdateDBCache(dbs):
     UpdateFile(dbm,dbs,1)
 
 try:
-	kacd = ReadCache()
+    kacd = ReadCache()
 except:
-	UpdateCache()
-
-try:
-	dbs = ReadDBCache()
-except:
-	UpdateDBCache(dbs)
+    UpdateCache()
 
 def FetchPageAsJSON(url):
-	try:
-		return json.loads(str(urllib2.urlopen(str(url)).read())), 200
-	except Exception as e:
-		return str(e), 401
+    try:
+        return json.loads(str(urllib2.urlopen(str(url)).read())), 200
+    except Exception as e:
+        return str(e), 401
 
 def AllIsWell():
-	ok = 0; attempts = 0
-	while attempts < 3:
-		if FetchPageAsJSON(o("ÅÐÐÑÐ"))[1] == 200:
-			ok+=1
-		attempts+=1
-	if ok > 1:
-		return True
-	else:
-		return False
+    ok = 0; attempts = 0
+    while attempts < 3:
+        if FetchPageAsJSON(o("ÅÐÐÑÐ"))[1] == 200:
+            ok+=1
+        attempts+=1
+    if ok > 1:
+        return True
+    else:
+        return False
 
 def version():
-	return "2.6"
+    return "2.6.1"
 
 ver = version
 
 def CreateBlock(name,description="no info"):
-	name, description = map(lambda x:x.lower(),[name,description])
-	global kacd
-	if name in kacd["blocks"]:
-		return "a block with this name exists, try another name"
-	else:
-		server_response = PersistentRequest(nbu)
-		try:
-			tracking_url = server_response["data"]["tracking_url"]
-			kacd["blocks"][name] = {"url":tracking_url,"about":description}
-			UpdateCache()
-			status = "the block [%s] was registered on the blockchain" % name
-			return status
-		except:
-			status = "create block exception"
-			return status
+    name, description = map(lambda x:x.lower(),[name,description])
+    global kacd
+    if name in kacd["blocks"]:
+        return "a block with this name exists, try another name"
+    else:
+        server_response = PersistentRequest(nbu)
+        try:
+            tracking_url = server_response["data"]["tracking_url"]
+            kacd["blocks"][name] = {"url":tracking_url,"about":description}
+            UpdateCache()
+            status = "the block [%s] was registered on the blockchain" % name
+            return status
+        except:
+            status = "create block exception"
+            return status
 
 def AboutBlock(blockname):
-	blockname = blockname.lower()
-	block_data = ReadCache()["blocks"]
-	if blockname not in block_data:
-		return "block not found"
-	else:
-		return "about block: %s" % block_data[blockname]["about"]
+    blockname = blockname.lower()
+    block_data = ReadCache()["blocks"]
+    if blockname not in block_data:
+        return "block not found"
+    else:
+        return "about block: %s" % block_data[blockname]["about"]
 
 def GetBlockIdentifiers(blockname):
-	blockname = blockname.lower()
-	block_data = ReadCache()["blocks"]
-	if blockname not in block_data:
-		return "block not found"
-	else:
-		block_url = block_data[blockname]["url"]
-		block_code = block_url.split('/')[3]
-		return block_url,block_code
+    blockname = blockname.lower()
+    block_data = ReadCache()["blocks"]
+    if blockname not in block_data:
+        return "block not found"
+    else:
+        block_url = block_data[blockname]["url"]
+        block_code = block_url.split('/')[3]
+        return block_url,block_code
 
 def parameterize(data):
-	parameters = ""
-	for key in data:
-		k = str(key); v = str(data[key])
-		parameters+=k+"="+v+"&"
-	return "block_info:"+parameters[:-1]
+    parameters = ""
+    for key in data:
+        k = str(key); v = str(data[key])
+        parameters+=k+"="+v+"&"
+    return "block_info:"+parameters[:-1]
 
 def PersistentRequest(url):
-	server_response, code = FetchPageAsJSON(url)
-	retry_count = 0
-	while code != 200 and AllIsWell()==False:
-		server_response, code = FetchPageAsJSON(url)
-		if code != 200:
-			print "retrying...(%d)" % retry_count
-			server_response = url+" (unreachable)"
-			print server_response
-			retry_count+=1
-	return server_response
+    server_response, code = FetchPageAsJSON(url)
+    retry_count = 0
+    while code != 200 and AllIsWell()==False:
+        server_response, code = FetchPageAsJSON(url)
+        if code != 200:
+            print "retrying...(%d)" % retry_count
+            server_response = url+" (unreachable)"
+            print server_response
+            retry_count+=1
+    return server_response
 
 
 def SendData(blockname,record_list):
-	blockname = blockname.lower()
-	block_data = ReadCache()["blocks"]
-	if blockname not in block_data:
-		return "block not found"
-	else:
-		block_url, block_code = GetBlockIdentifiers(blockname)
-		for record in record_list:
-			push_data_url = pdbu % (block_code,th(parameterize(record)))
-			return PersistentRequest(push_data_url)
+    blockname = blockname.lower()
+    block_data = ReadCache()["blocks"]
+    if blockname not in block_data:
+        return "block not found"
+    else:
+        block_url, block_code = GetBlockIdentifiers(blockname)
+        for record in record_list:
+            push_data_url = pdbu % (block_code,th(parameterize(record)))
+            return PersistentRequest(push_data_url)
 
 def send_data(blockname,record_list):
-	status = SendData(blockname,record_list)
-	while bool(status!="block not found" and str(status)!="{u'message': u'Ledger updated', u'code': 201}"):
-		status = SendData(blockname,record_list)
-	return status
+    status = SendData(blockname,record_list)
+    while bool(status!="block not found" and str(status)!="{u'message': u'Ledger updated', u'code': 201}"):
+        status = SendData(blockname,record_list)
+    return status
 
 
 def persistent_retrieve(url):
-	result = PersistentRequest(url)
-	try:
-		keys = result.keys()
-		return result[keys[-1]]
-	except:
-		return persistent_retrieve(url)
+    result = PersistentRequest(url)
+    try:
+        keys = result.keys()
+        return result[keys[-1]]
+    except:
+        return persistent_retrieve(url)
 
 def fetch_all(format_type):
-	collection = {}
-	block_data = ReadCache()["blocks"]
-	for blockname in block_data:
-		block_url, block_code = GetBlockIdentifiers(blockname)
-		fetch_url = pdbu2 % (block_code,format_type)
-		collection[blockname] = persistent_retrieve(fetch_url)
-	return collection
+    collection = {}
+    block_data = ReadCache()["blocks"]
+    for blockname in block_data:
+        block_url, block_code = GetBlockIdentifiers(blockname)
+        fetch_url = pdbu2 % (block_code,format_type)
+        collection[blockname] = persistent_retrieve(fetch_url)
+    return collection
 
 
 def fetch_one(blockname,format_type):
-	blockname = blockname.lower()
-	block_data = ReadCache()["blocks"]
-	if blockname not in block_data:
-		return "block not found"
-	else:
-		block_url, block_code = GetBlockIdentifiers(blockname)
-		fetch_url = pdbu2 % (block_code,format_type)
-		return persistent_retrieve(fetch_url)
+    blockname = blockname.lower()
+    block_data = ReadCache()["blocks"]
+    if blockname not in block_data:
+        return "block not found"
+    else:
+        block_url, block_code = GetBlockIdentifiers(blockname)
+        fetch_url = pdbu2 % (block_code,format_type)
+        return persistent_retrieve(fetch_url)
 
 def return_all_lx():
-	return fetch_all("ledger")
+    return fetch_all("ledger")
 
 def return_all_tx():
-	return fetch_all("transactions")
+    return fetch_all("transactions")
 
 def return_one_lx(blockname):
-	return fetch_one(blockname,"ledger")
+    return fetch_one(blockname,"ledger")
 
 def return_one_tx(blockname):
-	return fetch_one(blockname,"transactions")
+    return fetch_one(blockname,"transactions")
 
 def list_my_blocks():
-	return ReadCache()["blocks"].keys()
+    return ReadCache()["blocks"].keys()
 
 class Rigo:
     def __init__(self,name,password):
@@ -369,6 +365,7 @@ class Rigo:
                     return "EditTableError: row number out of range (max: %d)" % self.entries[tableName]
 
 def RigoDB(command,options={}):
+    global dbs
     command = command.lower()
     if command == 'new_database':
         required = ["dbname","dbpassword"]
